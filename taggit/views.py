@@ -7,6 +7,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 
 from taggit.models import TaggedItem, Tag
 
+
 def tagged_object_list(request, slug, queryset, **kwargs):
     if callable(queryset):
         queryset = queryset()
@@ -18,6 +19,7 @@ def tagged_object_list(request, slug, queryset, **kwargs):
         kwargs["extra_context"] = {}
     kwargs["extra_context"]["tag"] = tag
     return object_list(request, qs, **kwargs)
+
 
 def list_tags(request):
     try:

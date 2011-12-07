@@ -3,7 +3,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models.fields.related import ManyToManyRel, RelatedField, add_lazy_relation
 from django.db.models.related import RelatedObject
-from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _
 
 from taggit.forms import TagField
@@ -99,7 +98,7 @@ class TaggableManager(RelatedField):
             "widget": TagAutocomplete
         }
         defaults.update(kwargs)
-        
+
         return form_class(**defaults)
 
     def value_from_object(self, instance):
@@ -133,7 +132,7 @@ class TaggableManager(RelatedField):
     def extra_filters(self, pieces, pos, negate):
         if negate or not self.use_gfk:
             return []
-        prefix = "__".join(["tagged_items"] + pieces[:pos-2])
+        prefix = "__".join(["tagged_items"] + pieces[:pos - 2])
         cts = map(ContentType.objects.get_for_model, _get_subclasses(self.model))
         if len(cts) == 1:
             return [("%s__content_type" % prefix, cts[0])]

@@ -52,7 +52,7 @@ class TagBase(models.Model):
 
 
 class Tag(TagBase):
-    namespace =  models.CharField(_('namespace'), max_length=100, blank=True, null=True)
+    namespace = models.CharField(_('namespace'), max_length=100, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.namespace = self.name.partition(":")[0] if self.name.partition(":")[1] == ":" else u''
@@ -61,7 +61,6 @@ class Tag(TagBase):
     class Meta:
         verbose_name = _("Tag")
         verbose_name_plural = _("Tags")
-
 
 
 class ItemBase(models.Model):
@@ -132,7 +131,7 @@ class GenericTaggedItemBase(ItemBase):
     content_object = GenericForeignKey()
 
     class Meta:
-        abstract=True
+        abstract = True
 
     @classmethod
     def lookup_kwargs(cls, instance):

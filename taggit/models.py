@@ -93,6 +93,19 @@ class ItemBase(models.Model):
             "content_object__in": instances,
         }
 
+class VotableBase(models.Model):
+    up_votes = models.PositiveIntegerField(default=0)
+    down_votes = models.PositiveIntegerField(default=0)
+    score = models.IntegerField(default=0)
+    timestamp = models.DateTimeField(default=datetime.datetime.now)
+
+    def save(self, *args, **kwargs):
+        self.score = self.up_votes - self.down_votes
+        self.timestamp = datetime.datetime.now()
+        super(VotableBase, self).save(*args, **kwargs)
+
+    class Meta:
+        abstract = True
 
 class TaggedItemBase(ItemBase):
     if django.VERSION < (1, 2):
@@ -159,7 +172,7 @@ class GenericTaggedItemBase(ItemBase):
         return cls.tag_model().objects.filter(**kwargs).distinct()
 
 
-class TaggedItem(GenericTaggedItemBase, TaggedItemBase):
+class TaggedItem(GenericTaggedItemBase, TaggedItemBase, VotableBase):
     class Meta:
         verbose_name = _("Tagged Item")
         verbose_name_plural = _("Tagged Items")

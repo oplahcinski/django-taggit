@@ -108,6 +108,14 @@ class VotableBase(models.Model):
     class Meta:
         abstract = True
 
+class TagVote(models.Model):
+    tag_id = models.PositiveIntegerField()
+    user = models.PositiveIntegerField()
+    up = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = (("tag_id", "user"),)
+
 class TaggedItemBase(ItemBase):
     if django.VERSION < (1, 2):
         tag = models.ForeignKey(Tag, related_name="%(class)s_items")

@@ -224,6 +224,10 @@
                     }
                     var string = input.val().replace(/[\\]+|[\/]+/g, "");
                     if (string == prev) return;
+                    if (string.length >= 90) {
+                        input.val(string.slice(0,-1));
+                        return;
+                    }
                     prev = string;
                     if (string.length >= opts.minChars) {
                         selections_holder.addClass("loading");

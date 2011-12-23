@@ -201,6 +201,10 @@
                         }
                         break;
                     default:
+                        if (input.val().length >= 90) {
+                            input.val(input.val().slice(0,-1));
+                            return;
+                        }
                         if (opts.showResultList) {
                             if (opts.selectionLimit && $("li.as-selection-item", selections_holder).length >= opts.selectionLimit) {
                                 results_ul.html('<li class="as-message">' + opts.limitText + '</li>');
@@ -224,10 +228,6 @@
                     }
                     var string = input.val().replace(/[\\]+|[\/]+/g, "");
                     if (string == prev) return;
-                    if (string.length >= 90) {
-                        input.val(string.slice(0,-1));
-                        return;
-                    }
                     prev = string;
                     if (string.length >= opts.minChars) {
                         selections_holder.addClass("loading");
